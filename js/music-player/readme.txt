@@ -1,0 +1,1 @@
+This is a simple javascript example I have created spontaneously during class, originally inspired from grooveshark.com player. Songs are stored in javascript multidimensional array and once user pick any song to play, it will start playing and move to next song, and repeat all list until user stops. HTML5 audio player used.

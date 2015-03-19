@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Untitled Document</title>
+    <style>
+        .box{ width:100px; height:100px; background:#06C; position:absolute; top:100px; left:200px;}
+
+    </style>
+
+</head>
+
+<body>
+<label id="text"></label>
+<input type="button" value="Create a new box" id="addBtn" >
+
+
+<script>
+
+    var content, mouseX, mouseY,elementX,elementY,diffX,diffY;
+    var box;
+
+
+    window.onload = function(){
+        document.getElementById('addBtn').addEventListener('click',createBox); // attach click event to add button
+    }
+
+    function createBox()
+    {
+        var boxElement = document.createElement('div');
+        boxElement.className = 'box';
+        colorBox(boxElement);
+        boxElement.addEventListener('mousedown',function(e){
+            elementX = boxElement.offsetLeft;
+            elementY = boxElement.offsetTop;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            diffX = mouseX - elementX;
+            diffY = mouseY - elementY;
+            boxElement.addEventListener('mousemove',startDrag);
+
+        });
+        boxElement.addEventListener('mouseup',function(){
+            boxElement.removeEventListener('mousemove',startDrag);
+        });
+        boxElement.addEventListener('mouseout',function(){
+            boxElement.removeEventListener('mousemove',startDrag);
+        });
+
+        document.body.appendChild(boxElement);
+    }
+
+
+    function startDrag(e)
+    {
+        content = 'x = '+e.clientX+' and y = '+e.clientY;
+        document.getElementById('text').innerHTML = content;
+        this.style.left = (e.clientX - diffX)+'px';
+        this.style.top = (e.clientY - diffY)+'px';
+
+    }
+    function colorBox(elem) // e will contain the element we clicked on
+    {
+
+        var list = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
+        var num;
+        var color = "#";
+
+        for(var i=0; i<6; i++)
+        {
+            num = Math.floor( Math.random()*16 ); // generating random number between 0-15
+            color += list[num];
+        }
+        // here we got our hexadecimal color code ready
+
+        elem.style.background = color;
+    }
+
+
+
+</script>
+</body>
+</html>

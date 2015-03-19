@@ -1,0 +1,1 @@
+this file is the first version of aecms core. This was planned to be very modular, lightweight and flexible content management system framework. Version 2 is based on this but still in development phase

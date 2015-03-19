@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+#wrapper
+{
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#login_page
+{
+	width:300px;
+	min-height:350px;
+	background-color:#CCF;
+	margin-top:200px;
+	font-size:20px;
+	overflow:auto;
+	border-radius:10px;
+	-moz-border-radius:10px;
+}
+
+#login_page ul
+{
+	list-style:none;
+}
+#login_page li
+{
+	line-height:30px;
+	font-size:14px;
+	font-weight:400;
+}
+#login_page input
+{
+	padding:5px;
+	width:200px;
+}
+#login_page #buttons
+{
+	background-color:#336;
+	color:#fff;
+	border:none;
+	width:100px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	
+}
+.error_msg
+{
+	color:#D00;
+	font-size:16px;
+	text-align:center;
+}

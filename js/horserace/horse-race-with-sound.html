@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+
+<style>
+#field{ 
+	width:100%;
+	position:relative;
+	background:#060;
+	height:700px;
+}
+.lines
+{
+	width:10px;
+	height:600px;
+	background:#FFFFFF;
+	position:absolute;
+	top:0;
+	z-index:1;
+}
+#left-line
+{
+	left:200px;
+}
+#right-line
+{
+	left:1000px;
+}
+#horse1, #horse2, #horse3
+{
+	left:50px;
+	position:absolute;
+	z-index:100;
+}
+#horse1 {top:100px;}
+#horse2 {top:230px;}
+#horse3 {top:450px;}
+
+#lanes
+{
+	position:absolute;
+	z-index:900;
+	list-style:none;
+	width:90%;
+	top:0px;
+}
+#lanes li
+{
+	border-bottom:thick white dashed;
+	height:200px;
+}
+#countdown-screen
+{
+	display:none;
+	position:absolute;
+	z-index:1000;
+	width:300px;
+	height:180px;
+	padding-top:120px;
+	top:200px;
+	left:30%;
+	background:#669999;
+	color:white;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:36px;
+	text-align:center;
+	vertical-align:central;
+}
+#horse1Win, #horse2Win, #horse3Win
+{
+	width:150px;
+	height:50px;
+	padding:20px 20px 0 20px;
+	margin-top:50px;
+	background:#CC3333;
+	color:black;
+	font-size:24px;
+	float:right;
+	border:black dashed thick;
+	display:none;
+}
+</style>
+<script>
+    var horse1speed,horse2speed,horse3speed;
+
+
+
+var timerID; // we will use this variable to keep timer's id number
+var i=3; // we will use this for countdown screen, we start to count from 3
+
+function moveHorses()
+{
+
+    horse1speed = Math.random()*5; // create speed value for horse1, min=0 max =50, but this number will be floating number
+    horse1speed = Math.ceil(horse1speed); // we don't want floating number so we will round it up and have decimal number
+
+    horse2speed = Math.random()*5;
+    horse2speed = Math.ceil(horse2speed);
+
+    horse3speed = Math.random()*5;
+    horse3speed = Math.ceil(horse3speed);
+
+	// we first need to get horses current position (left offset)
+	var horse1pos1 = document.getElementById('horse1').offsetLeft;
+	var horse2pos1 = document.getElementById('horse2').offsetLeft;
+	var horse3pos1 = document.getElementById('horse3').offsetLeft;
+	
+	// we already know each horse's speed and their current position (left offset) so time to find their next position (left offset)
+	var horse1pos2 = horse1pos1 + horse1speed;
+	var horse2pos2 = horse2pos1 + horse2speed;
+	var horse3pos2 = horse3pos1 + horse3speed;
+	
+	// we will move each horse to their new position visually
+	document.getElementById('horse1').style.left = horse1pos2+"px";
+	document.getElementById('horse2').style.left = horse2pos2+"px";
+	document.getElementById('horse3').style.left = horse3pos2+"px";
+	
+	// need to check, after they move to their new position if any of these horses actually crossed the finish line. we can perform this by comparing their offset values with finish lines offset
+	if(horse1pos2 > 1000 || horse2pos2 > 1000 || horse3pos2 > 1000)
+	{
+		stopRace(); // if any horse crossed  finish line then stop race
+		if(horse1pos2 > 1000) // if horse1 was the one who crossed line, show horse1 win 
+		{
+			document.getElementById('horse1Win').style.display = "block";
+		}
+		else if(horse2pos2 > 1000) // if horse2 was the one who crossed line, show horse2 win 
+		{
+			document.getElementById('horse2Win').style.display = "block";
+		}
+		else if(horse3pos2 > 1000) // if horse3 was the one who crossed line, show horse3 win 
+		{
+			document.getElementById('horse3Win').style.display = "block";
+		}
+		
+	}
+}
+
+function startRace()
+{
+	
+	timerID = setInterval('moveHorses()',30);
+	document.getElementById('sound-bg').play()
+	
+}
+
+// once we click start button first we will call countDown() function. 
+function countDown() // this function will be called every second until i variable became -1, which means we finished counting
+{
+	document.getElementById('countdown-screen').style.display = "block"; // it will display this element
+	document.getElementById('countdown-screen').innerHTML = i; // change number in element
+	i--; // find next number
+	if(i==-1) // our counting will finish once i became -1
+	{
+		// if we finished counting down, we will hide countdown screen and start race
+		document.getElementById('countdown-screen').style.display= "none"; 
+		startRace();
+	}
+	else// if counting down haven't finished yet,
+	{
+		setTimeout('countDown()',1000); // wait 1 second and call countdown function again
+		// here what we do actually we are keep calling same function, but number i will be different each time. This is like loop but we can also control delay by changing value of 1000 (milliseconds)
+	}
+}
+
+
+function stopRace()
+{
+	clearInterval(timerID);
+}
+
+
+</script>
+</head>
+
+<body>
+<audio id="sound" onEnded="countDown()">
+  <source src="preview.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio> 
+
+<audio id="sound-bg">
+  <source src="horse-race.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio> 
+
+<div id="field">
+	<img id="horse1" src="running_horse.gif" width="150" />
+    <img id="horse2" src="race_horse_running.gif" width="150" />
+    <img id="horse3" src="sonic.gif" width="150" />
+    
+    <div id="left-line" class="lines"></div>
+	<div id="right-line" class="lines"></div>
+    <ul id="lanes">
+    	<li><div id="horse1Win">Horse 1 Won!!</div></li>
+        <li><div id="horse2Win">Horse 2 Won!!</div></li>
+        <li><div id="horse3Win">Horse 3 Won!!</div></li>
+    </ul>
+
+    <input type="button" value="Start Race" onclick="document.getElementById('sound').play()" />
+
+    <h3 id="countdown-screen">3</h3>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+<?php define("projectPath",'C:\inetpub\theiamzone_com\ali_efe\wordpress'); define("serverPath", 'C:\\inetpub\\theiamzone_com'); ?>

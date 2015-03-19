@@ -1,0 +1,1 @@
+In this example, you will be able to destroy elements of facebook page :) just click on any div and it will be removed from page

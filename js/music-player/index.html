@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style>
+#footer{ 
+	width:100%; 
+	height:190px; 
+	position:fixed; 
+	bottom:0; 
+	left:0; 
+	background:#333;
+}
+#playerBox{ 
+	width:100%; 
+	margin:10px auto auto 20px;
+}
+#playList{ 
+	list-style:none; 
+	margin:10px 0; 
+	padding:0; 
+	float:left; 
+	clear:both;
+}
+#playList li{ 
+	width:120px; 
+	height:110px; 
+	border:1px solid #8F5514; 
+	border-radius:10px; 
+	display:inline-block; 
+	float:left; 
+	background:#C60; 
+	color:white; 
+	padding:3px; 
+	margin-left:10px;
+}
+#playList li img{ margin-left:35px; width:50px;}
+#playList li:hover{ background:#C33; cursor:pointer; }
+#playerBox audio{ width:300px; float:left;}
+#playerBox span{
+	height:30px; 
+	background:white; 
+	border:1px solid #666; 
+	color:black; 
+	width:300px;  
+	display:inline-block; 
+	float:left;`
+}
+.playingSong{ 
+	/* because of using more spesific selection previously (id and element) I had to apply important. This could be solved by re-organizing id-class structure and javascript according to that. THis is the place for improvement */
+	width:120px !important; 
+	height:120px !important; 
+	background:#396 !important; 
+	border-color:#0C3 !important;
+}
+
+</style>
+<script>
+/// HERE WE ARE PREPARING SONGS LIST
+var songList = Array();
+
+songList.push( Array("Ray Lamontagne","Trouble","01 - Trouble.mp3","MinionRelease.jpg") );
+songList.push( Array("Ray Lamontagne","Shelter","02 - Shelter.mp3","MinionRelease.jpg") );
+songList.push( Array("Ray Lamontagne","Hold you in my arms","03 - Hold You In My Arms.mp3","MinionRelease.jpg") );
+songList.push( Array("Ray Lamontagne","Narrow escape","04 - Narrow Escape.mp3","MinionRelease.jpg") );
+songList.push( Array("Ray Lamontagne","Jolene","09 - Jolene.mp3","MinionRelease.jpg") );
+// END OF SONGS LIST
+
+
+var currentSong=0; // current song number by default = 0
+
+
+window.onload = function(){ // after page loaded
+	
+	for(var i=0; i< songList.length; i++)
+	{
+		var node = document.createElement('li');
+		node.setAttribute('onclick','playSong('+i+')');
+		var content = '<img src="'+songList[i][3]+'" width="50" /><br/>'+songList[i][0]+'<br/>'+songList[i][1]; // prepare text to show inside li
+		
+		node.innerHTML = content; // put content inside new li element
+		document.getElementById('playList').appendChild(node); // inject new li element into playlist
+	}
+	
+	var musicPlayer = document.getElementById('musicPlayer'); // selecting audio element
+	var playerStatus = document.getElementById('playerStatus'); // selecting player status bar which displays current status
+	
+	
+	musicPlayer.addEventListener('ended',function(){  // attached event for deciding what to do when any song finished playing
+			checkNext(); 
+			playerStatus.innerHTML="Stopped";
+		},false);
+		
+	musicPlayer.addEventListener('play',function(){  // attached event for deciding what to do when any song plays
+			playerStatus.innerHTML = "Playing : "+songList[currentSong][0]+" - "+songList[currentSong][1];
+		},false);
+		
+	musicPlayer.addEventListener('pause',function(){ // attached event for deciding what to do when user paused player
+			playerStatus.innerHTML = "Paused";
+		},false);
+
+}
+
+function playSong(num) // receives song number and plays it. Also style that songs li element to highlight song which is currenlty playing
+{
+
+	musicPlayer.src=""; // stopping any song playing
+	musicPlayer.src = songList[num][2]; // assing new file as source
+	musicPlayer.play();	// start playing
+	
+	currentSong = num; // setting currentSong number as selected song's number
+	var list = document.getElementById('playList').getElementsByTagName('li'); // selecting all list elements
+	 
+	for(var i=0; i<list.length; i++) // looping inside these list elements to add or remove class="playingSong"
+	{
+		if(i==num)
+			list.item(i).setAttribute("class","playingSong");
+		else
+			list.item(i).removeAttribute('class');
+	}
+	
+	
+}
+function checkNext() // this function will decide which one is going to be next song and call playSong function with number of next song
+{
+	if(currentSong+1< songList.length)
+		playSong(currentSong+1);
+	else
+		playSong(0);
+}
+
+</script>
+</head>
+
+<body>
+
+
+<div id="footer">
+	<div id="playerBox">
+		<audio id="musicPlayer" controls="controls" ></audio>
+        <span id="playerStatus"></span>
+	</div>
+    <ul id="playList"></ul>
+</div>
+
+</body>
+</html>

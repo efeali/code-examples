@@ -1,0 +1,2 @@
+This is an example coded spontaneously during class from scratch.
+In this example user can create div's directly (will be injected into dom) and these boxes will be also draggable. no 3rd party code used.

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="js/jquery-mobile/jquery.mobile-1.3.1.min.css" />
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery-mobile/jquery.mobile-1.3.1.min.js"></script>
+        <script type="text/javascript" src="cordova-2.7.0.js"></script>
+       <script type="text/javascript" src="js/index.js"></script>
+        <title>Denon 1912 controller</title>
+    </head>
+    <body>
+        <div data-role="page" id="home">
+        	<div data-role="header">
+            	<h1>Denon 1912 Controller</h1>
+            </div>
+            <div data-role="content">Pick what do you want?
+            	<ul data-role="listview">
+                	<li><a href="#receiverControl">Control Receiver</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="page" id="receiverControl">
+        	<div data-role="header"><h4>Receiver Control</h4></div>
+        	<div data-role="content">
+            	<h3>Denon Receiver Controller</h3>
+                <div data-role="fieldcontain"></div>
+               <div data-role="controlgroup">
+               		<div style="float:left" class="ui-grid-duo">
+					<label for="zone1Power">Main Zone Power </label>
+                    <select id="zone1Power" name="zone1Power" data-theme="" data-role="slider" onChange="turnOnOff(1,this.value)">
+                    	<option value="0">Off</option>
+                        <option value="1">On</option>
+                    </select>
+                 	</div> 
+         			<div style="float:right" class="ui-grid-duo">
+               		<label for="zone2Power">Zone2 Power </label>
+                    <select id="zone2Power" name="zone2Power" data-theme="" data-role="slider" onChange="turnOnOff(2,this.value)">
+                    	<option value="0">Off</option>
+                        <option value="1">On</option>
+                	</select>
+               		</div>
+               </div>
+               <div data-role="fieldcontain"></div>
+               <div data-role="fieldcontain">
+                    <label for="Zone1Volume">Main Zone Volume</label>
+                    <input id="zone1Volume" type="range" name="slider" value="-70" min="-80" max="0"
+                    data-highlight="false" >
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="Zone2Volume">Zone2 Volume</label>
+                    <input id="zone2Volume" type="range" name="slider" value="-70" min="-80" max="0"
+                    data-highlight="false">
+                </div>
+                <strong class="error"></strong>
+            
+            </div>
+            <div data-role="footer">
+            	<ul data-role="listview">
+                	<li><a href="#sourceZone1">Zone1 Source</a></li>
+                    <li><a href="#sourceZone2">Zone2 Source</a></li>
+            		<li><a href="#home">Home</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="page" id="sourceZone2">
+        	<div data-role="header"><h2>Zone2 Source</h2></div>
+            <div data-role="content">
+           		Under construction
+            </div>
+            <div data-role="footer">
+            	<ul data-role="listview">
+                	<li><a href="#receiverControl">Main Control</a></li>
+                	<li><a href="#sourceZone1">Zone1 Source</a></li>
+            		<li><a href="#home">Home</a></li>
+                </ul>
+            </div>
+        </div>
+        
+         
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>

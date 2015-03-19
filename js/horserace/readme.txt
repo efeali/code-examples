@@ -1,0 +1,2 @@
+This is a simple horse race game I created spontenously during the class, it is all javascript , html/css based. Player speed will be defined randomly, any player can win.
+HTML5 audio used, js, html5/css3
